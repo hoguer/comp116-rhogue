@@ -49,7 +49,7 @@ In addition to grepping for PASS, I grepped for "LOGIN", "USER", "UNAME", "PW", 
 13. For each of the plaintext username-password pair that you found, identify the protocol used, server IP, the corresponding domain name (e.g., google.com), and port number.
 protocol: IMAP
 server IP: 87.120.13.118
-domain name: d6.net
+domain name: mail.radsot.com
 port number: 143
 
 IMPORTANT NOTE: PLEASE DO NOT LOG ON TO THE WEBSITE OR SERVICE ASSOCIATED WITH THE USERNAME-PASSWORD THAT YOU FOUND!
@@ -72,13 +72,13 @@ COMMUNITY: public  INFO: SNMP v1
 nab01620@nifty.com:Nifty->takirin1
 Protocol: IMAP
 Server IP: 210.131.4.155
-Domain Name: nifty.ad.jp 
+Domain Name: nifty.ad.jp (wireshark Name Resolution actually didn't give a domain name for this one, so this is from 'whois')
 Port: 143
 
 jeff:asdasdasd (NOTE: ettercap showed this as plaintext, but the communication used HTTP basic auth, which does use Base64, so username & password are transmitted as amVmZjphc2Rhc2Rhc2Q=)
 Protocol: HTTP
 Server IP: 54.191.109.23
-Domain Name: ec2.intelctf.com
+Domain Name: ec2-54-191-109-23.us-west-2.compute.amazonaws.com 
 Port: 80
 
 seymore:butts
