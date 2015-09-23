@@ -95,6 +95,7 @@ Two are legitimate:
 2) jef:asdasdasd 
 
 18. Provide a listing of all IP addresses with corresponding hosts (hostname + domain name) that are in this PCAP set. Describe your methodology.
+See comp116-rhogue/assignment1/ip_to_host_list.txt 
 
 General Questions
 
@@ -103,7 +104,7 @@ I used Wireshark to follow the TCP stream, and I was able to see whether the log
 
 20. What advice would you give to the owners of the username-password pairs that you found so their account information would not be revealed "in-the-clear" in the future?
 1) Don't use shared/public or unencrypted networks
-2) If you have to do (1), don't login to sites with insecure protocols such as HTTP, FTP, and IMAP. 
+2) If you have to do (1), don't login to sites using insecure protocols such as HTTP, FTP, and IMAP. 
 3) Don't use the wifi at defcon.
 
 
