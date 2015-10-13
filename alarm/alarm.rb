@@ -145,8 +145,7 @@ end
 
 # returns true if the packet is from another Nmap scan
 def is_nmap_scan?(packet)
-  return (contains_nmap?(packet.tcp_header.body) or
-          contains_nmap?(packet.payload))
+  return contains_nmap?(packet.payload)
 end
 
 # returns true if the packet is from a Nikto scan
