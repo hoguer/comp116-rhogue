@@ -74,7 +74,11 @@ end
 
 # returns true if str_val contains shellcode
 def contains_shell_code?(str_val)
-  shell_strings = ["/bin/bash", "rm -rf", "{ :; }", ".sh"]
+  shell_strings = ["/bin/bash", "/2f/62/69/6e/2f/62/61/73/68",
+                   "rm -rf", "/72/6d/20/2d/72/66",
+                   "{ :; }", "/7b/20/3a/3b/20/7d",
+                   ".sh", "/2e/73/68"]
+                  
   shell_strings.each do |ss|
     return true if str_val.include? ss
   end
