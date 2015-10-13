@@ -38,6 +38,7 @@ end
 
 options = Parser.parse ARGV
 
+
 ####################################
 # Analyze Web Server Log Functions #
 ####################################
@@ -82,6 +83,10 @@ def contains_shell_code?(str_val)
   shell_strings.each do |ss|
     return true if str_val.include? ss
   end
+
+  shellcode_matches = /(\\x\w{2})+/.match(str_val)
+  return true if (not shellcode_matches.to_a[0].nil?)
+  
   return false
 end
 
@@ -134,17 +139,23 @@ end
 
 # returns true if the packet is from a NULL scan
 def is_null_scan?(packet)
-  return (packet.is_tcp? and (packet.tcp_header.tcp_flags.to_i == 0))
+  return (packet.is_ip? and
+          packet.is_tcp? and
+          (packet.tcp_header.tcp_flags.to_i == 0))
 end
 
 # returns true if the packet is from a FIN scan
 def is_fin_scan?(packet)
-  return (packet.is_tcp? and (packet.tcp_header.tcp_flags.to_i == 1))
+  return (packet.is_ip? and
+          packet.is_tcp? and
+          (packet.tcp_header.tcp_flags.to_i == 1))
 end
 
 # returns true if the packet is from an Xmas scan
 def is_xmas_scan?(packet)
-  return (packet.is_tcp? and (packet.tcp_header.tcp_flags.to_i == 41))
+  return (packet.is_ip? and
+          packet.is_tcp? and
+          (packet.tcp_header.tcp_flags.to_i == 41))
 end
 
 # returns true if the packet is from another Nmap scan

@@ -1,6 +1,8 @@
 ABOUT
 Identify what aspects of the work have been correctly implemented and what have not:
     > I attempted to implement all aspects of the work correctly except for the bonus. If I missed something, I am not currently aware of it.
+    > If one packet has more than one incident, it is only shown once, for the first incident identified.
+    > I don't convert to base 64 before printing the payload
     
 Identify anyone with whom you have collaborated or discussed the assignment:
     > I worked alone on this assignment.
@@ -16,6 +18,7 @@ I don't think they are "even that good." Here are some possible concerns:
 - I'm not sure if there are other communications that have the same TCP flag settings as the FIN, Xmas, and NULL Nmap scans, which would cause false positives in detecting these scans.
 - My shell code strings probably don't cover all possible shell code strings that you might find in an apache log.
 - The credit card leak check strips out whitespace and dashes, but there could very well be other separators. There may also be other types of credit cards that might not be covered by the regex, and there may be numbers that are identified as credit card numbers that are, in fact, something else (false positives). 
+-As discussed in class, Nmap scan packets don't always have a payload, so searching for "nmap" in the payload fails to detect the scan in this case
 
 2.) If you have spare time in the future, what would you add to the program or do differently with regards to detecting incidents?
 - I would try to close some of the "holes" mentioned above by using existing, effective gems (such as Apache Log Regex, http://simonecarletti.com/blog/2009/02/apache-log-regex-a-lightweight-ruby-apache-log-parser/ as well as looking for credit card verification gems) or by exploring more attacks/incidents that have occurred.
