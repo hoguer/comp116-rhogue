@@ -4,7 +4,7 @@ require 'optparse'
 
 $incident_number = 0
 
-Options = Struct.new(:logfile, :interface)
+Options = Struct.new(:logfile, :interface, :pcap)
 
 class Parser
   def self.parse(options)
@@ -23,6 +23,10 @@ class Parser
 
       opts.on("-i", "--interface=NAME", "Name of interface") do |i|
         args.interface = i
+      end
+
+      opts.on("-p", "--pcapFilename=NAME", "Name of pcap file") do |p|
+        args.pcap = p
       end
 
       opts.on("-h", "--help", "Prints this help") do
@@ -192,6 +196,29 @@ def reportIncident(incident, source_ip, protocol, payload)
    puts "#{$incident_number}. ALERT: #{incident} is detected from #{source_ip} (#{protocol}) (#{payload})!"
 end
 
+def check_packet(p)
+    incident = "None"
+    pkt = PacketFu::Packet.parse(p)
+
+    if is_nikto_scan?(pkt)
+      incident = "Nikto Scan"
+    elsif is_null_scan?(pkt)
+      incident = "NULL Scan"
+    elsif is_fin_scan?(pkt)
+      incident = "FIN Scan"
+    elsif is_xmas_scan?(pkt)
+      incident = "Xmas Scan"
+    elsif is_nmap_scan?(pkt)
+      incident = "Nmap Scan"
+    elsif is_credit_card_leak?(pkt)
+      incident = "Credit Card Leak"
+    end
+    
+    if incident != "None"
+      reportIncident(incident, pkt.ip_saddr, pkt.proto.last, pkt.payload)
+    end
+end
+
 ##############
 # BEGIN MAIN #
 ##############
@@ -223,29 +250,14 @@ if options.logfile
     
   end
   
-else #live capture
+elsif options.pcap
+  cap = PCAPRUB::Pcap.open_offline(options.pcap)
+  cap.each do |p|
+    check_packet(p)
+  end
+else  #live capture
   cap = PacketFu::Capture.new(:iface => options.interface, :start => true, :promisc => true)
   cap.stream.each do |p|
-    incident = "None"
-    pkt = PacketFu::Packet.parse(p)
-
-    if is_nikto_scan?(pkt)
-      incident = "Nikto Scan"
-    elsif is_null_scan?(pkt)
-      incident = "NULL Scan"
-    elsif is_fin_scan?(pkt)
-      incident = "FIN Scan"
-    elsif is_xmas_scan?(pkt)
-      incident = "Xmas Scan"
-    elsif is_nmap_scan?(pkt)
-      incident = "Nmap Scan"
-    elsif is_credit_card_leak?(pkt)
-      incident = "Credit Card Leak"
-    end
-    
-    if incident != "None"
-      reportIncident(incident, pkt.ip_saddr, pkt.proto.last, pkt.payload)
-    end
-    
+    check_packet(p)
   end
 end

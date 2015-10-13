@@ -1,6 +1,6 @@
 ABOUT
 Identify what aspects of the work have been correctly implemented and what have not:
-    > I attempted to implement all aspects of the work correctly except for the bonus. If I missed something, I am not currently aware of it.
+    > I attempted to implement all aspects of the work correctly, including the bonus. If I missed something, I am not currently aware of it.
     > If one packet has more than one incident, it is only shown once, for the first incident identified.
     > I don't convert to base 64 before printing the payload
     
@@ -8,7 +8,7 @@ Identify anyone with whom you have collaborated or discussed the assignment:
     > I worked alone on this assignment.
 
 Say approximately how many hours you have spent completing the assignment:
-    > 10 hours
+    > 11 hours
 
 QUESTIONS
 1.) Are the heuristics used in this assignment to determine incidents "even that good"?
